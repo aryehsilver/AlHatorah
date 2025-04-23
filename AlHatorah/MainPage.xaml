@@ -2,7 +2,15 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AlHatorah.MainPage">
-
-  <WebView x:Name="webView" Navigating="OnNavigating" />
-
+  <Grid>
+    <WebView x:Name="webView" Navigating="OnNavigating" />
+    <Button Text="Save"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            CornerRadius="15"
+            Margin="0, 0, 5, 5"
+            Padding="10, 5"
+            BorderColor="#b5b5b5"
+            Clicked="SaveUrl_Clicked" />
+  </Grid>
 </ContentPage>

@@ -10,7 +10,7 @@ public partial class MainPage : ContentPage {
   }
 
   private void SetSource() {
-    webView.Source = Preferences.Default.Get(nameof(App.StartUrl), App.StartUrl);
+    webView.Source = Preferences.Default.Get($"AH{nameof(App.StartUrl)}", App.StartUrl);
     App.SetUrl = false;
   }
 
@@ -43,8 +43,15 @@ public partial class MainPage : ContentPage {
         args.Cancel = true;
         SetSource();
       } else {
-        Preferences.Default.Set(nameof(App.StartUrl), args.Url);
+        Preferences.Default.Set($"AH{nameof(App.StartUrl)}", args.Url);
       }
     }
+  }
+
+  private async void SaveUrl_Clicked(object sender, EventArgs e) {
+    string result = await webView.EvaluateJavaScriptAsync($"function getLoc() {{ console.log('About to return location'); return document.location.href; }} getLoc();");
+    await Console.Out.WriteLineAsync($"About to save {result} as the App.StartUrl");
+    App.StartUrl = result;
+    Preferences.Default.Set($"AH{nameof(App.StartUrl)}", result);
   }
 }
