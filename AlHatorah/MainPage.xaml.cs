@@ -1,4 +1,5 @@
 ﻿using AlHatorah.Platforms.Android;
+using Android.Widget;
 
 namespace AlHatorah;
 
