@@ -1,5 +1,4 @@
 ﻿using AlHatorah.Platforms.Android;
-using Android.Widget;
 
 namespace AlHatorah;
 
@@ -49,9 +48,29 @@ public partial class MainPage : ContentPage {
   }
 
   private async void SaveUrl_Clicked(object sender, EventArgs e) {
-    string result = await webView.EvaluateJavaScriptAsync($"function getLoc() {{ console.log('About to return location'); return document.location.href; }} getLoc();");
+    string result = await webView.EvaluateJavaScriptAsync(@$"function getLoc() {{
+      console.log('About to return location');
+      return document.location.href;
+    }}
+    getLoc();");
     await Console.Out.WriteLineAsync($"About to save {result} as the App.StartUrl");
     App.StartUrl = result;
     Preferences.Default.Set($"AH{nameof(App.StartUrl)}", result);
+    Toast.MakeText(MainActivity.Instance, $"{result} saved", ToastLength.Long).Show();
   }
+
+  private async void OnNavigated(object sender, WebNavigatedEventArgs e) =>
+    // TODO: Make this a floating button that saves to preferences and load accordingly
+    await webView.EvaluateJavaScriptAsync(@$"
+      document.body.style.backgroundColor = ""#3c3c3c"";
+      var elements = document.getElementsByClassName(""verse"");
+      for (var i = 0; i < elements.length; i++) {{
+        elements[i].style.background = ""#242424"";
+        elements[i].style.color = ""#cdcdcd"";
+      }}
+      document.getElementsByClassName(""topbar-container"")[0].style.background = ""linear-gradient(#531b1b, #350101)"";
+      const style = document.createElement(""style"");
+      style.appendChild(document.createTextNode("".content:before {{ color: #b7b7b7 !important; }} .sidebar.active {{ background-color: #484848; }} .sidebar a:not(.close) {{ background: #999999; }} .sidebar a:not(.close).active {{ background: #282828; }}""));
+      document.getElementsByTagName(""body"")[0].appendChild(style);
+    ");
 }
