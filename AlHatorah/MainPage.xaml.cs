@@ -61,15 +61,15 @@ public partial class MainPage : ContentPage {
   }
 
   private async void OnNavigated(object sender, WebNavigatedEventArgs e) {
-    if (Preferences.Get($"AH{nameof(App.DarkMode)}", false)) {
+    if (App.DarkMode || Preferences.Get($"AH{nameof(App.DarkMode)}", false)) {
       App.DarkMode = true;
       await ToggleDarkMode(App.DarkMode);
     }
   }
 
   private async void DarkMode_Clicked(object sender, EventArgs e) {
-    bool darkMode = !App.DarkMode;
-    await ToggleDarkMode(darkMode);
+    App.DarkMode = !App.DarkMode;
+    await ToggleDarkMode(App.DarkMode);
   }
 
   private async Task ToggleDarkMode(bool darkMode) {
