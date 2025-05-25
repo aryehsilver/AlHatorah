@@ -4,7 +4,8 @@
              x:Class="AlHatorah.MainPage">
   <Grid>
     <WebView x:Name="webView" Navigating="OnNavigating" Navigated="OnNavigated" />
-    <Button Text="Save"
+    <Button x:Name="saveButton"
+            Text="Save"
             HorizontalOptions="End"
             VerticalOptions="End"
             CornerRadius="15"
@@ -12,5 +13,16 @@
             Padding="10, 5"
             BorderColor="#b5b5b5"
             Clicked="SaveUrl_Clicked" />
+    <Button x:Name="darkButton"
+            Text="🌙"
+            HorizontalOptions="Start"
+            VerticalOptions="End"
+            CornerRadius="500"
+            Margin="5, 0, 0, 5"
+            Padding="10, 5"
+            Rotation="-10"
+            HeightRequest="38"
+            BorderColor="#b5b5b5"
+            Clicked="DarkMode_Clicked" />
   </Grid>
 </ContentPage>
