@@ -4,25 +4,106 @@
              x:Class="AlHatorah.MainPage">
   <Grid>
     <WebView x:Name="webView" Navigating="OnNavigating" Navigated="OnNavigated" />
-    <Button x:Name="saveButton"
-            Text="Save"
+
+    <Grid x:Name="PopupOverlay"
+          BackgroundColor="Transparent"
+          IsVisible="False">
+      <Grid.GestureRecognizers>
+        <TapGestureRecognizer Tapped="OnOverlayTapped" />
+      </Grid.GestureRecognizers>
+    </Grid>
+
+    <Button x:Name="FloatingButton"
+            WidthRequest="45"
+            HeightRequest="45"
+            CornerRadius="45"
+            BackgroundColor="#fff"
+            TextColor="#000"
+            FontSize="16"
+            Text="⋯"
             HorizontalOptions="End"
             VerticalOptions="End"
-            CornerRadius="15"
-            Margin="0, 0, 5, 5"
-            Padding="10, 5"
-            BorderColor="#b5b5b5"
-            Clicked="SaveUrl_Clicked" />
-    <Button x:Name="darkButton"
-            Text="🌙"
-            HorizontalOptions="Start"
-            VerticalOptions="End"
-            CornerRadius="500"
-            Margin="5, 0, 0, 5"
-            Padding="10, 5"
-            Rotation="-10"
-            HeightRequest="38"
-            BorderColor="#b5b5b5"
-            Clicked="DarkMode_Clicked" />
+            Margin="10,5"
+            Clicked="OnFloatingButtonClicked">
+      <Button.Shadow>
+        <Shadow Brush="Black" 
+                Offset="2,2" 
+                Radius="4" 
+                Opacity="0.3" />
+      </Button.Shadow>
+    </Button>
+
+    <Border x:Name="PopupMenu"
+          BackgroundColor="White"
+          StrokeThickness="1"
+          Stroke="#b5b5b5"
+          Padding="0"
+          IsVisible="False"
+          HorizontalOptions="End"
+          VerticalOptions="End"
+          Margin="20,0,10,55"
+          WidthRequest="50"
+          HeightRequest="235">
+      <Border.StrokeShape>
+        <RoundRectangle CornerRadius="25" />
+      </Border.StrokeShape>
+      <Border.Shadow>
+        <Shadow Brush="Black" 
+              Offset="2,2" 
+              Radius="8" 
+              Opacity="0.3" />
+      </Border.Shadow>
+
+      <Grid RowDefinitions="*,*,*,*,*">
+        <Button Text="⬅️"
+                x:Name="BackButton"
+                BackgroundColor="Transparent"
+                TextColor="Black"
+                FontSize="18"
+                Clicked="OnBackClicked"
+                CornerRadius="60"
+                WidthRequest="60"
+                HeightRequest="45"
+                Grid.Row="0" />
+        <Button Text="➡️"
+                x:Name="ForwardButton"
+                BackgroundColor="Transparent"
+                TextColor="Black"
+                FontSize="18"
+                Clicked="OnForwardClicked"
+                CornerRadius="60"
+                WidthRequest="60"
+                HeightRequest="45"
+                Grid.Row="1" />
+        <Button Text="🔄"
+                BackgroundColor="Transparent"
+                TextColor="Black"
+                FontSize="18"
+                Clicked="OnRefreshClicked"
+                CornerRadius="60"
+                WidthRequest="60"
+                HeightRequest="45"
+                Grid.Row="2" />
+        <Button Text="💾"
+                BackgroundColor="Transparent"
+                TextColor="Black"
+                FontSize="18"
+                Clicked="OnSaveClicked"
+                CornerRadius="60"
+                WidthRequest="60"
+                HeightRequest="45"
+                Grid.Row="3" />
+        <Button Text="🌙"
+                x:Name="DarkModeButton"
+                BackgroundColor="Transparent"
+                TextColor="Black"
+                FontSize="18"
+                Clicked="OnDarkModeClicked"
+                CornerRadius="60"
+                WidthRequest="60"
+                HeightRequest="45"
+                Grid.Row="4" />
+      </Grid>
+    </Border>
   </Grid>
 </ContentPage>
