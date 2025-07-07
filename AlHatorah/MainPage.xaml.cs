@@ -5,6 +5,9 @@ using Button = Microsoft.Maui.Controls.Button;
 namespace AlHatorah;
 
 public partial class MainPage : ContentPage {
+  private const string _sun = "\uf185";
+  private const string _moon = "\uf186";
+
   public MainPage() {
     InitializeComponent();
     SetSource();
@@ -58,7 +61,7 @@ public partial class MainPage : ContentPage {
   }
 
   private async void OnFloatingButtonClicked(object sender, EventArgs e) {
-    if (PopupOverlay.IsVisible) {
+    if (PopupMenu.IsVisible) {
       await HidePopupMenu();
     } else {
       await ShowPopupMenu();
@@ -66,7 +69,7 @@ public partial class MainPage : ContentPage {
   }
 
   private async Task ShowPopupMenu() {
-    PopupOverlay.IsVisible = true;
+    //PopupOverlay.IsVisible = true;
     PopupMenu.IsVisible = true;
 
     // Animate the popup menu
@@ -89,7 +92,7 @@ public partial class MainPage : ContentPage {
       PopupMenu.FadeTo(0, 150)
     );
 
-    PopupOverlay.IsVisible = false;
+    //PopupOverlay.IsVisible = false;
     PopupMenu.IsVisible = false;
   }
 
@@ -124,7 +127,7 @@ public partial class MainPage : ContentPage {
     PopupMenu.BackgroundColor = Color.FromArgb(darkMode ? "#3C3C3C" : "#fff");
     PopupMenu.Stroke = Color.FromArgb(darkMode ? "#757575" : "#b5b5b5");
 
-    DarkModeButton.Text = darkMode ? "☀️" : "🌙";
+    DarkModeButton.Text = darkMode ? _sun : _moon;
     DarkModeButton.TextColor = Color.FromArgb(darkMode ? "#fff" : "#000");
 
     Grid grid = (Grid)PopupMenu.Content;

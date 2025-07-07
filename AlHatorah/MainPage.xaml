@@ -5,13 +5,13 @@
   <Grid>
     <WebView x:Name="webView" Navigating="OnNavigating" Navigated="OnNavigated" />
 
-    <Grid x:Name="PopupOverlay"
+    <!--<Grid x:Name="PopupOverlay"
           BackgroundColor="Transparent"
           IsVisible="False">
       <Grid.GestureRecognizers>
         <TapGestureRecognizer Tapped="OnOverlayTapped" />
       </Grid.GestureRecognizers>
-    </Grid>
+    </Grid>-->
 
     <Button x:Name="FloatingButton"
             WidthRequest="45"
@@ -55,48 +55,53 @@
       </Border.Shadow>
 
       <Grid RowDefinitions="*,*,*,*,*">
-        <Button Text="⬅️"
+        <Button Text="&#xf060;"
                 x:Name="BackButton"
                 BackgroundColor="Transparent"
                 TextColor="Black"
+                FontFamily="FontAwesome"
                 FontSize="18"
                 Clicked="OnBackClicked"
                 CornerRadius="60"
                 WidthRequest="60"
                 HeightRequest="45"
                 Grid.Row="0" />
-        <Button Text="➡️"
+        <Button Text="&#xf061;"
                 x:Name="ForwardButton"
                 BackgroundColor="Transparent"
                 TextColor="Black"
+                FontFamily="FontAwesome"
                 FontSize="18"
                 Clicked="OnForwardClicked"
                 CornerRadius="60"
                 WidthRequest="60"
                 HeightRequest="45"
                 Grid.Row="1" />
-        <Button Text="🔄"
+        <Button Text="&#xf021;"
                 BackgroundColor="Transparent"
                 TextColor="Black"
+                FontFamily="FontAwesome"
                 FontSize="18"
                 Clicked="OnRefreshClicked"
                 CornerRadius="60"
                 WidthRequest="60"
                 HeightRequest="45"
                 Grid.Row="2" />
-        <Button Text="💾"
+        <Button Text="&#xf0c7;"
                 BackgroundColor="Transparent"
                 TextColor="Black"
+                FontFamily="FontAwesome"
                 FontSize="18"
                 Clicked="OnSaveClicked"
                 CornerRadius="60"
                 WidthRequest="60"
                 HeightRequest="45"
                 Grid.Row="3" />
-        <Button Text="🌙"
+        <Button Text="&#xf186;"
                 x:Name="DarkModeButton"
                 BackgroundColor="Transparent"
                 TextColor="Black"
+                FontFamily="FontAwesome"
                 FontSize="18"
                 Clicked="OnDarkModeClicked"
                 CornerRadius="60"
