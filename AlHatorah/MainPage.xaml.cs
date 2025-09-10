@@ -4,18 +4,37 @@ using Button = Microsoft.Maui.Controls.Button;
 
 namespace AlHatorah;
 
-public partial class MainPage : ContentPage {
+public partial class MainPage : ContentPage, IDisposable {
   private const string _sun = "\uf185";
   private const string _moon = "\uf186";
+  private System.Timers.Timer _saveTimer;
 
   public MainPage() {
     InitializeComponent();
     SetSource();
+    SetupSaveTimer();
   }
 
   private void SetSource() {
     webView.Source = Preferences.Default.Get($"AH{nameof(App.StartUrl)}", App.StartUrl);
     App.SetUrl = false;
+  }
+
+  private void SetupSaveTimer() {
+    _saveTimer = new(10000) { AutoReset = true, Enabled = true };
+    _saveTimer.Elapsed += (sender, e) => {
+      MainThread.BeginInvokeOnMainThread(async () => {
+        string result = await webView.EvaluateJavaScriptAsync(@$"function getLoc() {{
+          console.log('About to return location');
+          return document.location.href;
+        }}
+        getLoc();");
+        await Console.Out.WriteLineAsync($"About to save {result} as the App.StartUrl");
+        App.StartUrl = result;
+        Preferences.Default.Set($"AH{nameof(App.StartUrl)}", result);
+      });
+    };
+    _saveTimer.Start();
   }
 
   protected override void OnAppearing() {
@@ -96,19 +115,6 @@ public partial class MainPage : ContentPage {
     PopupMenu.IsVisible = false;
   }
 
-  private async void OnSaveClicked(object sender, EventArgs e) {
-    string result = await webView.EvaluateJavaScriptAsync(@$"function getLoc() {{
-      console.log('About to return location');
-      return document.location.href;
-    }}
-    getLoc();");
-    await Console.Out.WriteLineAsync($"About to save {result} as the App.StartUrl");
-    App.StartUrl = result;
-    Preferences.Default.Set($"AH{nameof(App.StartUrl)}", result);
-    Toast.MakeText(MainActivity.Instance, $"{result} saved", ToastLength.Long).Show();
-    await HidePopupMenu();
-  }
-
   private async void OnRefreshClicked(object sender, EventArgs e) {
     await HidePopupMenu();
     webView.Reload();
@@ -170,4 +176,7 @@ public partial class MainPage : ContentPage {
       }
     }
   }
+
+  public void Dispose() =>
+    _saveTimer?.Dispose();
 }
