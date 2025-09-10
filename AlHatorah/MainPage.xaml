@@ -9,8 +9,8 @@
             WidthRequest="45"
             HeightRequest="45"
             CornerRadius="45"
-            BackgroundColor="#fff"
-            TextColor="#000"
+            BackgroundColor="#3C3C3C"
+            TextColor="#fff"
             FontSize="16"
             Text="⋯"
             HorizontalOptions="End"
@@ -26,16 +26,16 @@
     </Button>
 
     <Border x:Name="PopupMenu"
-          BackgroundColor="White"
+          BackgroundColor="#3C3C3C"
           StrokeThickness="1"
-          Stroke="#b5b5b5"
+          Stroke="#757575"
           Padding="0"
           IsVisible="False"
           HorizontalOptions="End"
           VerticalOptions="End"
           Margin="20,0,10,55"
           WidthRequest="50"
-          HeightRequest="180">
+          HeightRequest="138">
       <Border.StrokeShape>
         <RoundRectangle CornerRadius="25" />
       </Border.StrokeShape>
@@ -46,11 +46,11 @@
               Opacity="0.3" />
       </Border.Shadow>
 
-      <Grid RowDefinitions="*,*,*,*">
+      <Grid RowDefinitions="*,*,*">
         <Button Text="&#xf060;"
                 x:Name="BackButton"
                 BackgroundColor="Transparent"
-                TextColor="Black"
+                TextColor="White"
                 FontFamily="FontAwesome"
                 FontSize="18"
                 Clicked="OnBackClicked"
@@ -61,7 +61,7 @@
         <Button Text="&#xf061;"
                 x:Name="ForwardButton"
                 BackgroundColor="Transparent"
-                TextColor="Black"
+                TextColor="White"
                 FontFamily="FontAwesome"
                 FontSize="18"
                 Clicked="OnForwardClicked"
@@ -71,7 +71,7 @@
                 Grid.Row="1" />
         <Button Text="&#xf021;"
                 BackgroundColor="Transparent"
-                TextColor="Black"
+                TextColor="White"
                 FontFamily="FontAwesome"
                 FontSize="18"
                 Clicked="OnRefreshClicked"
@@ -79,17 +79,6 @@
                 WidthRequest="60"
                 HeightRequest="45"
                 Grid.Row="2" />
-        <Button Text="&#xf186;"
-                x:Name="DarkModeButton"
-                BackgroundColor="Transparent"
-                TextColor="Black"
-                FontFamily="FontAwesome"
-                FontSize="18"
-                Clicked="OnDarkModeClicked"
-                CornerRadius="60"
-                WidthRequest="60"
-                HeightRequest="45"
-                Grid.Row="3" />
       </Grid>
     </Border>
   </Grid>

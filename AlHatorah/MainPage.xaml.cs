@@ -1,13 +1,11 @@
 ﻿using AlHatorah.Platforms.Android;
 using Android.Widget;
-using Button = Microsoft.Maui.Controls.Button;
+using Timer = System.Timers.Timer;
 
 namespace AlHatorah;
 
 public partial class MainPage : ContentPage, IDisposable {
-  private const string _sun = "\uf185";
-  private const string _moon = "\uf186";
-  private System.Timers.Timer _saveTimer;
+  private Timer _saveTimer;
 
   public MainPage() {
     InitializeComponent();
@@ -71,13 +69,10 @@ public partial class MainPage : ContentPage, IDisposable {
     }
   }
 
-  private async void OnNavigated(object sender, WebNavigatedEventArgs e) {
-    await webView.EvaluateJavaScriptAsync(@$"document.querySelector('div:has(iframe[src*=youtube])').style.display='none';");
-    if (App.DarkMode || Preferences.Get($"AH{nameof(App.DarkMode)}", false)) {
-      App.DarkMode = true;
-      await ToggleDarkMode(App.DarkMode);
-    }
-  }
+  private async void OnNavigated(object sender, WebNavigatedEventArgs e) => await webView.EvaluateJavaScriptAsync(@$"
+      document.querySelector('div:has(iframe[src*=youtube])').style.display='none';
+      document.getElementsByClassName(""topbar-container"")[0].style.background = ""linear-gradient(#531b1b, #350101)"";
+    ");
 
   private async void OnFloatingButtonClicked(object sender, EventArgs e) {
     if (PopupMenu.IsVisible) {
@@ -118,41 +113,6 @@ public partial class MainPage : ContentPage, IDisposable {
   private async void OnRefreshClicked(object sender, EventArgs e) {
     await HidePopupMenu();
     webView.Reload();
-  }
-
-  private async void OnDarkModeClicked(object sender, EventArgs e) {
-    App.DarkMode = !App.DarkMode;
-    await ToggleDarkMode(App.DarkMode);
-    await HidePopupMenu();
-  }
-
-  private async Task ToggleDarkMode(bool darkMode) {
-    FloatingButton.BackgroundColor = Color.FromArgb(darkMode ? "#3C3C3C" : "#FFF");
-    FloatingButton.TextColor = Color.FromArgb(darkMode ? "#FFF" : "#000");
-
-    PopupMenu.BackgroundColor = Color.FromArgb(darkMode ? "#3C3C3C" : "#fff");
-    PopupMenu.Stroke = Color.FromArgb(darkMode ? "#757575" : "#b5b5b5");
-
-    DarkModeButton.Text = darkMode ? _sun : _moon;
-    DarkModeButton.TextColor = Color.FromArgb(darkMode ? "#fff" : "#000");
-
-    Grid grid = (Grid)PopupMenu.Content;
-    for (int i = 0; i < grid.Children.Count; i++) {
-      if (grid.Children[i] is Button btn && btn != DarkModeButton) {
-        btn.TextColor = Color.FromArgb(darkMode ? "#fff" : "#000");
-      }
-    }
-
-    Preferences.Default.Set($"AH{nameof(App.DarkMode)}", darkMode);
-    if (darkMode) {
-      await webView.EvaluateJavaScriptAsync(@$"
-        document.body.style.backgroundColor = ""#3c3c3c"";
-        document.getElementsByClassName(""topbar-container"")[0].style.background = ""linear-gradient(#531b1b, #350101)"";
-        const style = document.createElement(""style"");
-        style.appendChild(document.createTextNode(""body:not(.copying-to-clipboard) .verse, .options-place {{ background: #242424; color: #cdcdcd; }} .options-place-list li {{ background: #3c3c3c; border-color: #757575 !important; }} .mg-dlg .close {{ color: #ffffff; }} .options-heading {{ color: #b90000; }} .options-place-list li.options-place-selected, .home-section {{ background: #282828; color: #d77070; }} .options-place-chapter:before {{ background: #282828; }} .content:before {{ color: #b7b7b7 !important; }} .sidebar.active {{ background-color: #484848; }} .sidebar a:not(.close) {{ background: #999999; }} .sidebar a:not(.close).active {{ background: #282828; }} .white-btn {{ background: linear-gradient(#000000, #000000 25%, #2d2d2d); color: #fff; border: 1px solid #000000; border-bottom-color: #000000; }}"")); document.getElementsByTagName(""body"")[0].appendChild(style);");
-    } else {
-      webView.Reload();
-    }
   }
 
   private async void OnBackClicked(object sender, EventArgs e) {
