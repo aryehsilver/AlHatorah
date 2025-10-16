@@ -69,7 +69,8 @@ public partial class MainPage : ContentPage, IDisposable {
     }
   }
 
-  private async void OnNavigated(object sender, WebNavigatedEventArgs e) => await webView.EvaluateJavaScriptAsync(@$"
+  private async void OnNavigated(object sender, WebNavigatedEventArgs e) =>
+    await webView.EvaluateJavaScriptAsync(@$"
       document.querySelector('div:has(iframe[src*=youtube])').style.display='none';
       document.getElementsByClassName(""topbar-container"")[0].style.background = ""linear-gradient(#531b1b, #350101)"";
     ");
