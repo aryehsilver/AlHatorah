@@ -19,7 +19,7 @@ public partial class MainPage : ContentPage, IDisposable {
   }
 
   private void SetupSaveTimer() {
-    _saveTimer = new(10000) { AutoReset = true, Enabled = true };
+    _saveTimer = new(5000) { AutoReset = true, Enabled = true };
     _saveTimer.Elapsed += (sender, e) => {
       MainThread.BeginInvokeOnMainThread(async () => {
         string result = await webView.EvaluateJavaScriptAsync(@$"function getLoc() {{
