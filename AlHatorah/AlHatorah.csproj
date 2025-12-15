@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net9.0-android</TargetFrameworks>
+		<TargetFrameworks>net10.0-android</TargetFrameworks>
 		<OutputType>Exe</OutputType>
 		<RootNamespace>AlHatorah</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -18,17 +18,13 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net10.0-android|AnyCPU'">
     <AndroidEnableMultiDex>True</AndroidEnableMultiDex>
-    <AndroidUseAapt2>True</AndroidUseAapt2>
-    <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
     <AndroidPackageFormat>apk</AndroidPackageFormat>
     <AndroidLinkTool>r8</AndroidLinkTool>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
-    <AndroidUseAapt2>True</AndroidUseAapt2>
-    <AndroidCreatePackagePerAbi>False</AndroidCreatePackagePerAbi>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-android|AnyCPU'">
     <AndroidPackageFormat>apk</AndroidPackageFormat>
   </PropertyGroup>
 
@@ -41,6 +37,7 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
+    
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
 
@@ -49,13 +46,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.6" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+	  <Folder Include="Resources\Images\" />
+	  <Folder Include="Resources\Styles\" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Resources\Images\" />
-	  <Folder Include="Resources\Styles\" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="$(MauiVersion)" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 	</ItemGroup>
 
 </Project>
