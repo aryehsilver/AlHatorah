@@ -92,8 +92,8 @@ public partial class MainPage : ContentPage, IDisposable {
     PopupMenu.Opacity = 0;
 
     await Task.WhenAll(
-      PopupMenu.ScaleTo(1, 200, Easing.CubicOut),
-      PopupMenu.FadeTo(1, 200)
+      PopupMenu.ScaleToAsync(1, 200, Easing.CubicOut),
+      PopupMenu.FadeToAsync(1, 200)
     );
   }
 
@@ -103,8 +103,8 @@ public partial class MainPage : ContentPage, IDisposable {
   private async Task HidePopupMenu() {
     // Animate popup menu disappearing
     await Task.WhenAll(
-      PopupMenu.ScaleTo(0.1, 150, Easing.CubicIn),
-      PopupMenu.FadeTo(0, 150)
+      PopupMenu.ScaleToAsync(0.1, 150, Easing.CubicIn),
+      PopupMenu.FadeToAsync(0, 150)
     );
 
     //PopupOverlay.IsVisible = false;
