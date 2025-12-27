@@ -69,11 +69,17 @@ public partial class MainPage : ContentPage, IDisposable {
     }
   }
 
-  private async void OnNavigated(object sender, WebNavigatedEventArgs e) =>
+  private async void OnNavigated(object sender, WebNavigatedEventArgs e) {
     await webView.EvaluateJavaScriptAsync(@$"
       document.querySelector('div:has(iframe[src*=youtube])').style.display='none';
       document.getElementsByClassName(""topbar-container"")[0].style.background = ""linear-gradient(#531b1b, #350101)"";
     ");
+
+    // Stop RefreshView refreshing state if pull-to-refresh was used
+    try {
+      refreshView.IsRefreshing = false;
+    } catch { /* ignore if not present */ }
+  }
 
   private async void OnFloatingButtonClicked(object sender, EventArgs e) {
     if (PopupMenu.IsVisible) {
@@ -111,11 +117,6 @@ public partial class MainPage : ContentPage, IDisposable {
     PopupMenu.IsVisible = false;
   }
 
-  private async void OnRefreshClicked(object sender, EventArgs e) {
-    await HidePopupMenu();
-    webView.Reload();
-  }
-
   private async void OnBackClicked(object sender, EventArgs e) {
     await HidePopupMenu();
 
@@ -136,6 +137,16 @@ public partial class MainPage : ContentPage, IDisposable {
         ForwardButton.IsEnabled = false;
       }
     }
+  }
+
+  private void OnRefreshRequested(object sender, EventArgs e) {
+    try {
+      webView.Reload();
+    } catch { }
+
+    try {
+      refreshView.IsRefreshing = false;
+    } catch { }
   }
 
   public void Dispose() =>

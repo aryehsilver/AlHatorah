@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AlHatorah.MainPage">
   <Grid>
-    <WebView x:Name="webView" Navigating="OnNavigating" Navigated="OnNavigated" />
+    <RefreshView x:Name="refreshView" Refreshing="OnRefreshRequested">
+      <WebView x:Name="webView" Navigating="OnNavigating" Navigated="OnNavigated" />
+    </RefreshView>
 
     <Button x:Name="FloatingButton"
             WidthRequest="45"
@@ -46,7 +48,7 @@
               Opacity="0.3" />
       </Border.Shadow>
 
-      <Grid RowDefinitions="*,*,*">
+      <Grid RowDefinitions="*,*">
         <Button Text="&#xf060;"
                 x:Name="BackButton"
                 BackgroundColor="Transparent"
@@ -69,16 +71,6 @@
                 WidthRequest="60"
                 HeightRequest="45"
                 Grid.Row="1" />
-        <Button Text="&#xf021;"
-                BackgroundColor="Transparent"
-                TextColor="White"
-                FontFamily="FontAwesome"
-                FontSize="18"
-                Clicked="OnRefreshClicked"
-                CornerRadius="60"
-                WidthRequest="60"
-                HeightRequest="45"
-                Grid.Row="2" />
       </Grid>
     </Border>
   </Grid>
