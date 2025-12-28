@@ -17,12 +17,9 @@ namespace AlHatorah.Platforms.Android;
   )
 ]
 public class MainActivity : MauiAppCompatActivity {
-  public static MainActivity Instance { get; private set; }
-
   protected override void OnCreate(Bundle savedInstanceState) {
     DoIntent(Intent);
     base.OnCreate(savedInstanceState);
-    Instance = this;
   }
 
   protected override void OnNewIntent(Intent intent) {

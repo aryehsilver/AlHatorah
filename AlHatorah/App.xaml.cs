@@ -4,6 +4,7 @@ public partial class App : Application {
   public static string StartUrl = "https://alhatorah.org";
   public static bool SetUrl = false;
   public static bool DarkMode = false;
+  public static bool DesktopMode = false;
 
   public App() =>
     InitializeComponent();
