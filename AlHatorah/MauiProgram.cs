@@ -1,4 +1,5 @@
-﻿using Android.Webkit;
+﻿using Android.Content;
+using Android.Webkit;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Handlers;
 
@@ -27,6 +28,19 @@ public static class MauiProgram {
           settings.SetSupportZoom(true);
           settings.UseWideViewPort = true;
           settings.LoadWithOverviewMode = true;
+        }
+      } catch { }
+    });
+
+    // Add Android-only long-press link context menu (open, copy, share)
+    WebViewHandler.Mapper.AppendToMapping("LongPressMenu", (handler, view) => {
+      try {
+        if (handler.PlatformView is Android.Webkit.WebView native) {
+          // Ensure long clicks are enabled
+          native.LongClickable = true;
+          // Use the handler's context (Activity) if available, otherwise fall back to application context
+          Context ctx = handler.MauiContext?.Context ?? Android.App.Application.Context;
+          native.SetOnLongClickListener(new WebViewLongClickListener(ctx));
         }
       } catch { }
     });
